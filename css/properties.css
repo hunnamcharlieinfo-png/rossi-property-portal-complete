@@ -1,0 +1,225 @@
+/* Properties Page Specific Styles */
+.properties-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--gold);
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    color: var(--cream);
+    font-size: 1.2rem;
+}
+
+/* Filters */
+.filters-section {
+    background: white;
+    padding: 2rem 0;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 73px;
+    z-index: 50;
+}
+
+.filters-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--charcoal);
+    font-size: 0.9rem;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid var(--cream);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.btn-reset {
+    padding: 0.8rem 1.5rem;
+    background: var(--cream);
+    color: var(--charcoal);
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-reset:hover {
+    background: var(--gold);
+    color: white;
+}
+
+/* Results */
+.properties-section {
+    padding: 4rem 0;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.results-count {
+    color: var(--charcoal);
+    font-weight: 500;
+}
+
+.results-count span {
+    color: var(--gold);
+    font-weight: 700;
+}
+
+.view-toggle {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.view-btn {
+    padding: 0.6rem;
+    background: white;
+    border: 2px solid var(--cream);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-btn:hover,
+.view-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+}
+
+.view-btn:hover svg,
+.view-btn.active svg {
+    stroke: white;
+}
+
+/* Properties Grid */
+.properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.properties-grid.list-view {
+    grid-template-columns: 1fr;
+}
+
+.properties-grid.list-view .property-card {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+}
+
+.property-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--gold);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.page-btn {
+    padding: 0.8rem 1.5rem;
+    background: white;
+    border: 2px solid var(--cream);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.page-btn:hover {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+}
+
+.page-numbers {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.page-num {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 2px solid var(--cream);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.page-num:hover,
+.page-num.active {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+}
+
+@media (max-width: 768px) {
+    .filters-container {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .properties-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .properties-grid.list-view .property-card {
+        grid-template-columns: 1fr;
+    }
+}

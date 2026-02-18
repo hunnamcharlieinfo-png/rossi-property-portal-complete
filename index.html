@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Rossi Real Estate Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">ROSSI</div>
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">ROSSI</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="active">Dashboard</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-icon" onclick="toggleNotifications()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-badge">3</span>
+                </button>
+                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+            </div>
+            <button class="nav-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-dashboard">
+        <div class="container">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Welcome back, <span id="userName">Client</span></h1>
+                <p class="welcome-subtitle">Track your property acquisition journey</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">24</h3>
+                        <p class="stat-label">Available Properties</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">8</h3>
+                        <p class="stat-label">Saved Favorites</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">3</h3>
+                        <p class="stat-label">Scheduled Viewings</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                            <path d="M14 2v6h6"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">12</h3>
+                        <p class="stat-label">Documents</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard">
+        <div class="container">
+            <h2 class="section-title">Quick Actions</h2>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Client Profile</h3>
+                    <p class="card-description">
+                        Manage your personal information, property preferences, and acquisition criteria.
+                    </p>
+                    <a href="profile.html" class="card-link">
+                        View Profile
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+                            <path d="M9 22V12h6v10"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Property Portfolio</h3>
+                    <p class="card-description">
+                        Explore our curated selection of properties across Italy's most desirable regions.
+                    </p>
+                    <a href="properties.html" class="card-link">
+                        Browse Properties
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Viewing Schedule</h3>
+                    <p class="card-description">
+                        Coordinate property viewings with comprehensive itineraries and confirmations.
+                    </p>
+                    <a href="#" class="card-link" onclick="openModal('schedule')">
+                        View Calendar
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                            <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Document Center</h3>
+                    <p class="card-description">
+                        Access all acquisition documents including contracts and legal documentation.
+                    </p>
+                    <a href="#documents" class="card-link" onclick="document.getElementById('documents').scrollIntoView({behavior: 'smooth'})">
+                        View Documents
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Properties -->
+    <section id="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Properties</h2>
+                <a href="properties.html" class="view-all-link">View All →</a>
+            </div>
+
+            <div class="featured-grid" id="featuredProperties">
+                <!-- Properties loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline">
+        <div class="container">
+            <h2 class="section-title">Your Acquisition Journey</h2>
+            <p class="section-subtitle">Track your progress through each milestone</p>
+
+            <div class="timeline-section">
+                <div class="timeline">
+                    <div class="timeline-items">
+                        <div class="timeline-item completed">
+                            <div class="timeline-circle">✓</div>
+                            <h4 class="timeline-title">Initial Consultation</h4>
+                            <p class="timeline-status">Completed</p>
+                        </div>
+
+                        <div class="timeline-item completed">
+                            <div class="timeline-circle">✓</div>
+                            <h4 class="timeline-title">Property Search</h4>
+                            <p class="timeline-status">In Progress</p>
+                        </div>
+
+                        <div class="timeline-item active">
+                            <div class="timeline-circle">3</div>
+                            <h4 class="timeline-title">Property Viewings</h4>
+                            <p class="timeline-status">Current Phase</p>
+                        </div>
+
+                        <div class="timeline-item pending">
+                            <div class="timeline-circle">4</div>
+                            <h4 class="timeline-title">Offer & Acquisition</h4>
+                            <p class="timeline-status">Upcoming</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documents Section -->
+    <section id="documents">
+        <div class="container">
+            <h2 class="section-title">Document Center</h2>
+            <p class="section-subtitle">Your complete document package</p>
+
+            <div class="documents-grid">
+                <div class="document-card">
+                    <div class="doc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                            <path d="M14 2v6h6"></path>
+                        </svg>
+                    </div>
+                    <div class="doc-title">Power of Attorney</div>
+                    <div class="doc-meta">Procura Speciale • PDF • 145 KB</div>
+                    <button class="download-btn" onclick="downloadDocument('poa')">Download</button>
+                </div>
+
+                <div class="document-card">
+                    <div class="doc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                            <path d="M14 2v6h6"></path>
+                        </svg>
+                    </div>
+                    <div class="doc-title">Property Agreement</div>
+                    <div class="doc-meta">Contract • PDF • 298 KB</div>
+                    <button class="download-btn" onclick="downloadDocument('agreement')">Download</button>
+                </div>
+
+                <div class="document-card">
+                    <div class="doc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                            <path d="M14 2v6h6"></path>
+                        </svg>
+                    </div>
+                    <div class="doc-title">Tax Documentation</div>
+                    <div class="doc-meta">Financial • PDF • 178 KB</div>
+                    <button class="download-btn" onclick="downloadDocument('tax')">Download</button>
+                </div>
+
+                <div class="document-card">
+                    <div class="doc-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                            <path d="M14 2v6h6"></path>
+                        </svg>
+                    </div>
+                    <div class="doc-title">Instructions Guide</div>
+                    <div class="doc-meta">Complete Checklist • PDF • 256 KB</div>
+                    <button class="download-btn" onclick="downloadDocument('guide')">Download</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">ROSSI REAL ESTATE</div>
+            <div class="footer-tagline">Excellence in Italian Property Acquisition</div>
+            
+            <div class="contact-links">
+                <a href="tel:+39">+39 XXX XXX XXXX</a>
+                <a href="mailto:info@rossirealestate.it">info@rossirealestate.it</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+
+            <div class="copyright">
+                © 2026 Rossi Real Estate Agency | Professional Property Acquisition Services in Italy
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h3 class="modal-title" id="modalTitle">Title</h3>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/image-service.js"></script>
+    <script src="js/properties.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

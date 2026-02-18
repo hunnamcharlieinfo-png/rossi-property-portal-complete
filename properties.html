@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Properties | Rossi Real Estate Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/properties.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">ROSSI</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="properties.html" class="active">Properties</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+            <button class="btn-logout" onclick="handleLogout()">Logout</button>
+            <button class="nav-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="properties-hero">
+        <div class="container">
+            <h1 class="page-title">Discover Your Italian Dream</h1>
+            <p class="page-subtitle">Curated selection of premium properties across Italy</p>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label>Region</label>
+                    <select id="regionFilter" onchange="filterProperties()">
+                        <option value="">All Regions</option>
+                        <option value="tuscany">Tuscany</option>
+                        <option value="lombardy">Lombardy</option>
+                        <option value="lazio">Lazio</option>
+                        <option value="veneto">Veneto</option>
+                        <option value="sicily">Sicily</option>
+                        <option value="amalfi">Amalfi Coast</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Property Type</label>
+                    <select id="typeFilter" onchange="filterProperties()">
+                        <option value="">All Types</option>
+                        <option value="villa">Villa</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="farmhouse">Farmhouse</option>
+                        <option value="penthouse">Penthouse</option>
+                        <option value="cottage">Cottage</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <select id="priceFilter" onchange="filterProperties()">
+                        <option value="">Any Price</option>
+                        <option value="0-500">Under €500k</option>
+                        <option value="500-1000">€500k - €1M</option>
+                        <option value="1000-2000">€1M - €2M</option>
+                        <option value="2000-5000">€2M - €5M</option>
+                        <option value="5000-99999">€5M+</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Bedrooms</label>
+                    <select id="bedroomsFilter" onchange="filterProperties()">
+                        <option value="">Any</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                        <option value="5">5+</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sortFilter" onchange="sortProperties()">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                        <option value="size-large">Size: Largest First</option>
+                    </select>
+                </div>
+
+                <button class="btn-reset" onclick="resetFilters()">Reset Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Grid -->
+    <section class="properties-section">
+        <div class="container">
+            <div class="results-header">
+                <p class="results-count"><span id="resultsCount">24</span> properties found</p>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid" onclick="setView('grid', this)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </button>
+                    <button class="view-btn" data-view="list" onclick="setView('list', this)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="properties-grid" id="propertiesGrid">
+                <!-- Properties will be loaded by JavaScript -->
+            </div>
+
+            <div class="pagination">
+                <button class="page-btn" onclick="changePage('prev')">Previous</button>
+                <div class="page-numbers">
+                    <button class="page-num active">1</button>
+                    <button class="page-num">2</button>
+                    <button class="page-num">3</button>
+                    <span>...</span>
+                    <button class="page-num">8</button>
+                </div>
+                <button class="page-btn" onclick="changePage('next')">Next</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">ROSSI REAL ESTATE</div>
+            <div class="footer-tagline">Excellence in Italian Property Acquisition</div>
+            
+            <div class="contact-links">
+                <a href="tel:+39">+39 XXX XXX XXXX</a>
+                <a href="mailto:info@rossirealestate.it">info@rossirealestate.it</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+
+            <div class="copyright">
+                © 2026 Rossi Real Estate Agency | Professional Property Acquisition Services in Italy
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h3 class="modal-title" id="modalTitle">Title</h3>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/image-service.js"></script>
+    <script src="js/properties.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

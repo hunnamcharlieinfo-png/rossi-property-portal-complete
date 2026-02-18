@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Health Check | Rossi Portal</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #f5f1e8; 
+            padding: 2rem;
+            color: #1B2838;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #C9A961; margin-bottom: 2rem; text-align: center; }
+        .test-section { 
+            background: white; 
+            padding: 2rem; 
+            margin-bottom: 2rem; 
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .test-group { margin-bottom: 1.5rem; }
+        .test-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+            padding: 1rem;
+            background: #F9F7F3;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        .status { 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+        }
+        .status.pass { background: #27AE60; }
+        .status.fail { background: #E74C3C; }
+        .status.warn { background: #F39C12; }
+        .test-name { font-weight: 600; flex: 1; }
+        .test-result { font-size: 0.9rem; color: #7F8C8D; }
+        button { 
+            background: #1B2838;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+        button:hover { background: #C9A961; color: #1B2838; }
+        .summary { 
+            background: linear-gradient(135deg, #1B2838 0%, #2C3E50 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .score { font-size: 3rem; font-weight: bold; color: #C9A961; }
+        .btn-group { margin: 2rem 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 ROSSI PORTAL - SYSTEM HEALTH CHECK</h1>
+        
+        <div class="test-section">
+            <h2 style="margin-bottom: 1.5rem; color: #1B2838;">Quick Actions</h2>
+            <div class="btn-group">
+                <button onclick="runAllTests()">🔍 Run All Tests</button>
+                <button onclick="testLogin()">🔐 Test Login Flow</button>
+                <button onclick="testProperties()">🏠 Test Properties</button>
+                <button onclick="testForms()">📝 Test Forms</button>
+                <button onclick="resetSystem()">🔄 Reset System</button>
+            </div>
+        </div>
+
+        <div id="testResults" class="test-section">
+            <h2 style="margin-bottom: 1.5rem; color: #1B2838;">Test Results</h2>
+            <p style="text-align: center; color: #7F8C8D;">Click a button above to run tests...</p>
+        </div>
+    </div>
+
+    <script>
+        // Check all core systems
+        async function runAllTests() {
+            const results = document.getElementById('testResults');
+            let passed = 0, failed = 0, warned = 0;
+            let html = '<div class="test-group">';
+
+            // Test 1: DOM Elements
+            const modalTest = { pass: !!document.getElementById('modal'), name: 'Modal Element', desc: 'Modal HTML exists' };
+            if (modalTest.pass) { passed++; } else { failed++; }
+            html += createTestItem(modalTest);
+
+            // Test 2: Local Storage
+            const storageTest = { 
+                pass: typeof(Storage) !== 'undefined', 
+                name: 'Local Storage', 
+                desc: 'Browser supports localStorage' 
+            };
+            if (storageTest.pass) { passed++; } else { failed++; }
+            html += createTestItem(storageTest);
+
+            // Test 3: JavaScript Files
+            const jsFilesTest = { 
+                pass: typeof(ImageService) !== 'undefined' && typeof(properties) !== 'undefined',
+                name: 'JavaScript Files',
+                desc: 'Core scripts loaded (ImageService, Properties)'
+            };
+            if (jsFilesTest.pass) { passed++; } else { failed++; }
+            html += createTestItem(jsFilesTest);
+
+            // Test 4: Properties Data
+            const propsTest = {
+                pass: properties && properties.length === 10,
+                name: 'Properties Data',
+                desc: `Found ${properties?.length || 0} properties (need 10)`
+            };
+            if (propsTest.pass) { passed++; } else { failed++; }
+            html += createTestItem(propsTest);
+
+            // Test 5: Image Service
+            let imageTest = { pass: false, name: 'Image Generation', desc: 'ImageService generates SVG' };
+            try {
+                const testImg = ImageService.loadImage(properties[0]);
+                imageTest.pass = testImg && testImg.startsWith('data:image/svg+xml');
+                if (imageTest.pass) { passed++; } else { failed++; }
+            } catch (e) { failed++; }
+            html += createTestItem(imageTest);
+
+            // Test 6: Functions Available
+            const functions = ['viewProperty', 'openScheduleForm', 'openInfoForm', 'closeModal', 'toggleFavorite', 'renderProperties'];
+            let allFunctionsExist = true;
+            for (let fn of functions) {
+                if (typeof window[fn] !== 'function') {
+                    allFunctionsExist = false;
+                    break;
+                }
+            }
+            const funcTest = { pass: allFunctionsExist, name: 'Core Functions', desc: `${allFunctionsExist ? 'All' : 'Some'} functions exist` };
+            if (funcTest.pass) { passed++; } else { failed++; }
+            html += createTestItem(funcTest);
+
+            // Test 7: DOM Elements for Forms
+            const formsTest = {
+                pass: !!document.querySelector('form'),
+                name: 'Form Elements',
+                desc: 'Form elements present in page'
+            };
+            if (formsTest.pass) { passed++; } else { warned++; }
+            html += createTestItem(formsTest);
+
+            // Test 8: Navigation
+            const navTest = {
+                pass: !!document.querySelector('.main-nav'),
+                name: 'Navigation Bar',
+                desc: 'Navigation exists and visible'
+            };
+            if (navTest.pass) { passed++; } else { warned++; }
+            html += createTestItem(navTest);
+
+            html += '</div>';
+            
+            // Summary
+            const total = passed + failed + warned;
+            const percentage = Math.round((passed / total) * 100);
+            html += `
+                <div class="summary">
+                    <div class="score">${percentage}%</div>
+                    <p style="font-size: 1.2rem; margin-bottom: 1rem;">System Health Check</p>
+                    <p>✅ Passed: ${passed} | ❌ Failed: ${failed} | ⚠️ Warnings: ${warned}</p>
+                    ${failed === 0 ? '<p style="margin-top: 1rem; font-size: 1.1rem; color: #27AE60;">🎉 All systems operational!</p>' : ''}
+                </div>
+            `;
+
+            results.innerHTML = html;
+        }
+
+        function createTestItem(test) {
+            const status = test.pass ? 'pass' : test.warn === true ? 'warn' : 'fail';
+            const icon = status === 'pass' ? '✓' : status === 'warn' ? '⚠' : '✗';
+            return `
+                <div class="test-item">
+                    <div class="status ${status}">${icon}</div>
+                    <div>
+                        <div class="test-name">${test.name}</div>
+                        <div class="test-result">${test.desc}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function testLogin() {
+            const results = document.getElementById('testResults');
+            let html = '<div class="test-group">';
+            const tests = [];
+
+            // Test email validation
+            try {
+                const validEmail = isValidEmail('test@example.com');
+                const invalidEmail = !isValidEmail('invalid');
+                tests.push({ pass: validEmail && invalidEmail, name: 'Email Validation', desc: 'Validates emails correctly' });
+            } catch (e) {
+                tests.push({ pass: false, name: 'Email Validation', desc: 'Function error: ' + e.message });
+            }
+
+            // Test login simulation
+            try {
+                localStorage.setItem('testLogin', 'true');
+                const retrieved = localStorage.getItem('testLogin');
+                localStorage.removeItem('testLogin');
+                tests.push({ pass: retrieved === 'true', name: 'Login Storage', desc: 'Can store/retrieve login data' });
+            } catch (e) {
+                tests.push({ pass: false, name: 'Login Storage', desc: 'Error: ' + e.message });
+            }
+
+            // Test auth check
+            try {
+                tests.push({ pass: typeof checkAuth === 'function', name: 'Auth Check', desc: 'Auth function available' });
+            } catch (e) {
+                tests.push({ pass: false, name: 'Auth Check', desc: 'Error: ' + e.message });
+            }
+
+            tests.forEach(test => html += createTestItem(test));
+            html += '</div>';
+            results.innerHTML = html;
+        }
+
+        function testProperties() {
+            const results = document.getElementById('testResults');
+            let html = '<div class="test-group">';
+            const tests = [];
+
+            // Check properties array
+            tests.push({ 
+                pass: properties && properties.length > 0, 
+                name: 'Properties Array', 
+                desc: `Found ${properties?.length || 0} properties` 
+            });
+
+            // Check property structure
+            if (properties && properties.length > 0) {
+                const p = properties[0];
+                const hasAllFields = p.id && p.title && p.price && p.region && p.type;
+                tests.push({ 
+                    pass: hasAllFields, 
+                    name: 'Property Structure', 
+                    desc: hasAllFields ? 'All required fields present' : 'Missing fields in property data' 
+                });
+            }
+
+            // Check image generation
+            try {
+                const img = ImageService.loadImage(properties[0]);
+                tests.push({ 
+                    pass: img && img.includes('svg'), 
+                    name: 'Image Generation', 
+                    desc: img ? 'SVG generated successfully' : 'Image generation failed' 
+                });
+            } catch (e) {
+                tests.push({ pass: false, name: 'Image Generation', desc: 'Error: ' + e.message });
+            }
+
+            // Check filtering
+            try {
+                const testFilter = properties.filter(p => p.region === 'tuscany');
+                tests.push({ 
+                    pass: testFilter.length > 0, 
+                    name: 'Property Filtering', 
+                    desc: `Found ${testFilter.length} properties in Tuscany` 
+                });
+            } catch (e) {
+                tests.push({ pass: false, name: 'Property Filtering', desc: 'Error: ' + e.message });
+            }
+
+            tests.forEach(test => html += createTestItem(test));
+            html += '</div>';
+            results.innerHTML = html;
+        }
+
+        function testForms() {
+            const results = document.getElementById('testResults');
+            let html = '<div class="test-group">';
+            const tests = [];
+
+            // Check form functions exist
+            ['openScheduleForm', 'openInfoForm', 'submitScheduleViewing', 'submitInfoRequest'].forEach(fn => {
+                tests.push({
+                    pass: typeof window[fn] === 'function',
+                    name: `Function: ${fn}`,
+                    desc: typeof window[fn] === 'function' ? 'Available' : 'Not found'
+                });
+            });
+
+            // Check modal system
+            tests.push({
+                pass: typeof closeModal === 'function' && document.getElementById('modal'),
+                name: 'Modal System',
+                desc: 'Modal elements and functions ready'
+            });
+
+            tests.forEach(test => html += createTestItem(test));
+            html += '</div>';
+            results.innerHTML = html;
+        }
+
+        function resetSystem() {
+            if (confirm('⚠️ This will clear all saved data. Continue?')) {
+                localStorage.clear();
+                alert('✅ System reset. All data cleared.');
+                location.reload();
+            }
+        }
+
+        // Auto-run on page load if not on login page
+        window.addEventListener('load', () => {
+            if (!window.location.href.includes('login.html')) {
+                // This page is for testing, don't auto-run
+                console.log('System health check page loaded. Click buttons to run tests.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Rossi Real Estate Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">ROSSI</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="properties.html">Properties</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+                <li><a href="profile.html" class="active">Profile</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+            </div>
+            <button class="nav-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-dashboard">
+        <div class="container">
+            <div class="welcome-section">
+                <h1 class="welcome-title">Profile Settings</h1>
+                <p class="welcome-subtitle">Manage your account and preferences</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section style="padding: 4rem 0;">
+        <div class="container">
+            <div style="max-width: 800px; margin: 0 auto;">
+                
+                <!-- Personal Information -->
+                <div class="dashboard-card" style="margin-bottom: 2rem;">
+                    <h3 class="card-title">Personal Information</h3>
+                    <form style="margin-top: 2rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">First Name</label>
+                                <input type="text" id="firstName" style="width: 100%; padding: 0.9rem; border: 2px solid var(--cream); border-radius: 8px; font-size: 1rem;" value="John">
+                            </div>
+                            <div class="form-group">
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Last Name</label>
+                                <input type="text" id="lastName" style="width: 100%; padding: 0.9rem; border: 2px solid var(--cream); border-radius: 8px; font-size: 1rem;" value="Smith">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email</label>
+                            <input type="email" id="email" style="width: 100%; padding: 0.9rem; border: 2px solid var(--cream); border-radius: 8px; font-size: 1rem;" value="client@example.com">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone</label>
+                            <input type="tel" id="phone" style="width: 100%; padding: 0.9rem; border: 2px solid var(--cream); border-radius: 8px; font-size: 1rem;" value="+39 XXX XXX XXXX">
+                        </div>
+                        <button type="submit" class="card-link" onclick="event.preventDefault(); alert('Profile updated successfully!');">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Property Preferences -->
+                <div class="dashboard-card" style="margin-bottom: 2rem;">
+                    <h3 class="card-title">Property Preferences</h3>
+                    <form style="margin-top: 2rem;">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Preferred Regions</label>
+                            <select multiple style="width: 100%; padding: 0.9rem; border: 2px solid var(--cream); border-radius: 8px; font-size: 1rem; height: 120px;">
+                                <option selected>Tuscany</option>
+                                <option selected>Lombardy</option>
+                                <option>Veneto</option>
+                                <option>Sicily</option>
+                                <option>Lazio</option>
+                                <option>Amalfi Coast</option>
+                            </select>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Budget Range</label>
+                                <select style="width: 100%; padding: 0.9rem; border: 2px solid var(--cream); border-radius: 8px; font-size: 1rem;">
+                                    <option>Under €500k</option>
+                                    <option selected>€500k - €1M</option>
+                                    <option>€1M - €2M</option>
+                                    <option>€2M - €5M</option>
+                                    <option>€5M+</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Property Type</label>
+                                <select style="width: 100%; padding: 0.9rem; border: 2px solid var(--cream); border-radius: 8px; font-size: 1rem;">
+                                    <option selected>Villa</option>
+                                    <option>Apartment</option>
+                                    <option>Farmhouse</option>
+                                    <option>Penthouse</option>
+                                    <option>Any</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="card-link" onclick="event.preventDefault(); alert('Preferences updated!');">
+                            Update Preferences
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Account Settings -->
+                <div class="dashboard-card">
+                    <h3 class="card-title">Account Settings</h3>
+                    <div style="margin-top: 2rem;">
+                        <div style="padding: 1.5rem; background: var(--cream); border-radius: 8px; margin-bottom: 1rem;">
+                            <h4 style="margin-bottom: 0.5rem; color: var(--navy);">Email Notifications</h4>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" checked> New property matches
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" checked> Viewing reminders
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                <input type="checkbox"> Newsletter updates
+                            </label>
+                        </div>
+                        <button class="card-link" style="background: #E74C3C; margin-top: 1rem;" onclick="if(confirm('Delete account permanently?')) alert('Account deleted');">
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">ROSSI REAL ESTATE</div>
+            <div class="footer-tagline">Excellence in Italian Property Acquisition</div>
+            
+            <div class="contact-links">
+                <a href="tel:+39">+39 XXX XXX XXXX</a>
+                <a href="mailto:info@rossirealestate.it">info@rossirealestate.it</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+
+            <div class="copyright">
+                © 2026 Rossi Real Estate Agency
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h3 class="modal-title" id="modalTitle">Title</h3>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
